@@ -59,13 +59,13 @@ Data(main folder)
 
 The details of AwareNet pipeline can be found in <a href="https://github.com/YemanBrhane/AwareNet"> AwareNet </a>.
 
-![AwareNet output sample image](Images/cdcc.png)
+![AwareNet output sample image](Images/cdcc.PNG)
 ```
 Figure 1| Sample image showing cell detection and classifcation results of AwarNet pipeline. BLIMP1+ myeloma cells (Magente); CD8+ T cells (White); CD4+ T cells (Yellow)
 ```
 
 ## MoSaicNet pipeline: Tissue Compartments segmentation pipeline
-![MoSaicNet output sample image](Images/mosaicNet.png)
+![MoSaicNet output sample image](Images/MosaicNet.png)
 ```
 Figure 2| Sample image showing the differnt tissue compartments automatically segmented by MoSaicNet pipeline. 
 ```
