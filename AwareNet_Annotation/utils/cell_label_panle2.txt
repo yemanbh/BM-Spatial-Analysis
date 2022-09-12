@@ -1,0 +1,3 @@
+ffffff CD8
+ffff00 CD4
+ff00ff BLIMP1

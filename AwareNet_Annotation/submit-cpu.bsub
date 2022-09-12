@@ -1,0 +1,54 @@
+#*************** job configuration*****************************************
+
+#BSUB -J "VECTRA[15]"
+#BSUB -P EEC191X
+#BSUB -q normal
+#BSUB -e /mnt/scratch/DMP/COPAINGE/yhagos/MYELOMA/20201015_CD_CC_Panel1/Logs/train.%J.%I.errors
+#BSUB -o /mnt/scratch/DMP/COPAINGE/yhagos/MYELOMA/20201015_CD_CC_Panel1/Logs/train.%J.%I.outputs
+#BSUB -W 100:00
+#BSUB -n 50
+##BSUB –R "rusage[mem=25600]"
+##BSUB -u yeman.hagos@icr.ac.uk
+
+export LD_LIBRARY_PATH=/apps/intel/mkl-dnn/mklml_lnx_2018.0.1.20171007/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/apps/cudnn/cuda9.2/7.2.1/lib64/:/apps/cuda/9.2/lib64:$LD_LIBRARY_PATH
+source /apps/anaconda/3/5.1.0/etc/profile.d/conda.sh
+conda activate tf2cpu
+
+#**************************** input and output directories*****************
+csv_dir=/mnt/scratch/DMP/COPAINGE/yhagos/MYELOMA/20201015_CD_CC_Panel1/result/AnnotatedCellsCoord
+cws_dir=/mnt/scratch/DMP/COPAINGE/yhagos/MYELOMA/data/cws
+output_dir=/mnt/scratch/DMP/COPAINGE/yhagos/MYELOMA/20201015_CD_CC_Panel1/result/AnnotatedTiles
+
+# path to the code
+src_dir=/mnt/scratch/DMP/COPAINGE/yhagos/MYELOMA/20201015_CD_CC_Panel1/20200714_MarkCDCC
+# home directory 
+home_dir=/mnt/scratch/DMP/COPAINGE/yhagos/MYELOMA/20201015_CD_CC_Panel1
+
+num_cpu=50
+# $LSB_JOBINDEX or -1, [0, number of batch]
+batch=$LSB_JOBINDEX
+
+echo "************Printing time and other details ****************************"
+
+echo "LSB_BATCH_JID:" ${LSB_BATCH_JID}
+echo "current working directory:" ${PWD}
+#echo "created on:" $(date '+%Y-%m-%d')
+echo "created by:$USER"
+echo "created on: $(date)"
+
+echo "csv_dir:$csv_dir"
+echo "num_cpu:$num_cpu"
+echo "cws_dir:$cws_dir"
+
+python draw_gt_markers.py --num_cpu $num_cpu --cws_dir $cws_dir \
+                          --csv_dir $csv_dir --output_dir $output_dir\
+                          --src_dir $src_dir --batch $batch --cluster --mp
+
+#singularity exec \
+#	--bind "$home_dir:$home_dir" \
+#	--bind "$cws_dir:$cws_dir" \
+#	docker://yhagos/tf2cpu:v2 \
+#	/usr/local/bin/python $home_dir/20200714_MarkCDCC/draw_gt_markers.py --num_cpu $num_cpu --cws_dir $cws_dir \
+                          --csv_dir $csv_dir --output_dir $output_dir\
+                          --src_dir $src_dir --batch $batch --cluster
