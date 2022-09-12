@@ -65,7 +65,7 @@ Figure 1| Sample image showing cell detection and classifcation results of AwarN
 ```
 
 ## MoSaicNet pipeline: Tissue Compartments segmentation pipeline
-![MoSaicNet output sample image](Images/MosaicNet.png)
+![MoSaicNet output sample image](Images/MosaicNet1.png)
 ```
 Figure 2| Sample image showing the differnt tissue compartments automatically segmented by MoSaicNet pipeline. 
 ```
