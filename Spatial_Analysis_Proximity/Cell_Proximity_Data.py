@@ -115,8 +115,8 @@ if __name__ == '__main__':
         output_dir = r'output'
         combined_csv_dir = r'sample_data'
 
-        cell_pairs = [['CD4', 'FOXP3+CD4+'], ['CD8', 'FOXP3+CD4+']]
-        cell_names_panel = ['FOXP3+CD4+', 'CD4', 'CD8']
+        cell_pairs = [['FOXP3-CD4+', 'FOXP3+CD4+'], ['CD8+', 'FOXP3+CD4+']]
+        cell_names_panel = ['FOXP3+CD4+', 'FOXP3-CD4+', 'CD8+']
 
         for cell_pair in cell_pairs:
             params = dict(spatial_data_dir=combined_csv_dir,
