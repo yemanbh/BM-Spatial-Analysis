@@ -9,7 +9,7 @@ class PointPatternAnalysis(object):
     """
     Point pattern analysis
 
-        * it generates the number of event_cell at a distance (d) from reference cells for an array of d valuses.
+        * it generates the number of event_cell at a distance (d) from reference cells for an array of d values.
 
         * spatial_data: this should be a dataframe with X, Y, and Class columns.
         * reference_cell and event_cell should be list of element of class names in class column.
@@ -35,8 +35,8 @@ class PointPatternAnalysis(object):
 
         folder = "#{}_Within_D_from_{}".format('_and_'.join(event_cell), '_and_'.join(reference_cell) )
         self.output_dir_count = os.path.join(output_dir, 'proximity_analysis', folder)
-        self.output_dir_percentage = os.path.join(output_dir, 'nn_percentage', folder)
-        os.makedirs(self.output_dir_percentage, exist_ok=True)
+        # self.output_dir_percentage = os.path.join(output_dir, 'nn_percentage', folder)
+        # os.makedirs(self.output_dir_percentage, exist_ok=True)
         os.makedirs(self.output_dir_count, exist_ok=True)
 
     def count_cells_within_distance(self) -> pd.DataFrame():
@@ -101,14 +101,30 @@ class PointPatternAnalysis(object):
             # update nebourhood distance data
             df_count_temp['SlideName'] = slide_name
             df_count_temp['RefCellType'] = self.reference_cell[0]
+            df_count_temp[self.cell_names] = df_count_temp[self.cell_names].div(df_count_temp[self.cell_names].sum(axis=1), axis=0)
             df_count_temp['Distance'] = self.distances_list
             count_df = pd.concat([count_df, df_count_temp], axis=0, sort=False)
         # save files
         count_df.to_csv(os.path.join(self.output_dir_count, 'mean_nearest_cells_count.csv'), index=False)
-        # percentage_df.to_csv(os.path.join(self.output_dir_percentage, 'nn_cells_percentage.csv'), index=False)
-        # nn_dist_df.to_csv(os.path.join(self.output_dir_percentage, 'nn_cells_dist_record.csv'), index=False)
 
         return count_df
 
 if __name__ == '__main__':
-    pass
+
+        output_dir = r'output'
+        combined_csv_dir = r'sample_data'
+
+        cell_pairs = [['CD4', 'FOXP3+CD4+'], ['CD8', 'FOXP3+CD4+']]
+        cell_names_panel = ['FOXP3+CD4+', 'CD4', 'CD8']
+
+        for cell_pair in cell_pairs:
+            params = dict(spatial_data_dir=combined_csv_dir,
+                          reference_cell=[cell_pair[0]],
+                          event_cell=[cell_pair[1]],
+                          output_dir=output_dir,
+                          cell_names=cell_names_panel,
+                          mpp=0.4606,
+                          distances_list=[30, 50, 100, 150, 200, 250, 300])
+            pp = PointPatternAnalysis(**params)
+            pp.count_cells_within_distance()
+        print('DONE')
