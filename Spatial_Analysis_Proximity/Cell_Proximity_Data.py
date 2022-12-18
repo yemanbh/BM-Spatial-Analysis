@@ -103,9 +103,10 @@ class PointPatternAnalysis(object):
             df_count_temp['RefCellType'] = self.reference_cell[0]
             df_count_temp[self.cell_names] = df_count_temp[self.cell_names].div(df_count_temp[self.cell_names].sum(axis=1), axis=0)
             df_count_temp['Distance'] = self.distances_list
+            df_count_temp = df_count_temp[['SlideName', self.event_cell[0], 'Distance']]
             count_df = pd.concat([count_df, df_count_temp], axis=0, sort=False)
         # save files
-        count_df.to_csv(os.path.join(self.output_dir_count, 'mean_nearest_cells_count.csv'), index=False)
+        count_df.to_csv(os.path.join(self.output_dir_count, 'cell_proximity_data.csv'), index=False)
 
         return count_df
 
