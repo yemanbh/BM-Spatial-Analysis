@@ -1,7 +1,8 @@
-# Spatial Mapping of Bone Marrow Microevironment using Deep Learning
+# Spatial Mapping of Bone Marrow Microenvironment using Deep Learning
 
-This repository contains scripts developed for spatial mapping of the hematopoietic ecosytem of bone marrow and 
-the mosaic bone marrow tissue.
+This repository contains the implementation of methods described in our paper, "Deep Learning Enables Spatial Mapping of the Mosaic Microenvironment of Myeloma Bone Marrow Trephine Biopsies" [paper](https://aacrjournals.org/cancerres/article/84/3/493/733845), which got published at the American Association for Cancer Research (AACR) Journal. Our paper was on the cover of the February 2024 AACR publication volume.  The code is also available in CodeOcean with a docker image and test whole slide image ([code in CodeOcean](https://codeocean.com/capsule/0863619/tree/v1 )). 
+
+
 
 ## Implementation
 - Fully implemented in Python
